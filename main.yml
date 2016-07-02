@@ -1,7 +1,7 @@
 ---
 # This Playbook adds and updates users!
 
-- hosts: whatever
+- hosts: all
 
   remote_user: root
   become: true
