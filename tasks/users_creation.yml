@@ -1,0 +1,34 @@
+---
+# ===============================================================
+# users: Access, security and permissions
+# ===============================================================
+
+- include_vars: "defaults/main.yml"
+
+- name: Adding the primary group
+  group:
+    name={{ ansible_role_users.user_group }}
+    state=present
+  tags: users_creation
+
+- name: Adding root into our groups
+  user:
+    name=root
+    groups={{ ansible_role_users.user_groups }}
+  tags: users_creation
+
+- name: Creating the user(s)
+  user:
+    name={{ item }}
+    shell=/bin/bash group={{ ansible_role_users.user_group }}
+    groups={{ ansible_role_users.user_groups }}
+    createhome=yes
+  with_items: "{{ ansible_role_users.users }}"
+  tags: users_creation
+
+- name: Registering the public key against users
+  authorized_key:
+    user={{ item }}
+    key="{{ lookup('file', '{{ ansible_role_users.public_key }}') }}"
+  with_items: "{{ ansible_role_users.users }}"
+  tags: users_creation

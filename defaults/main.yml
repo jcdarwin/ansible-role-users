@@ -1,0 +1,27 @@
+---
+
+ansible_role_users:
+  # the users to create
+  # each user gets a /home directory
+  users:
+  - deploy
+  - git
+
+  # the main group to use when creating the user
+  user_group: wheel
+
+  # the groups the user should belong to
+  user_groups: ssh,wheel,www-data,sudo
+
+  # users in the following groups get SSH access to the machine
+  # note that the value is space-separated
+  allow_groups: ssh vagrant
+
+  # the public key value to use to allow the user ssh access
+  public_key: '~/.ssh/id_rsa.pub'
+
+  # do we want to disallow root ssh access?
+  disallow_root_ssh: true
+
+  # do we want to disallow password ssh access?
+  disallow_password_ssh: true

@@ -1,0 +1,37 @@
+---
+# ===============================================================
+# ssh: lock down ssh
+# ===============================================================
+
+- include_vars: "defaults/main.yml"
+
+- name: Disallow root SSH access
+  lineinfile:
+    dest=/etc/ssh/sshd_config
+    regexp='^PermitRootLogin'
+    line='PermitRootLogin no'
+    state=present
+  notify:
+    - restart ssh
+  when: ansible_role_users.disallow_root_ssh
+
+- name: Disallow SSH password authentication
+  lineinfile:
+    dest=/etc/ssh/sshd_config
+    regexp='^PasswordAuthentication'
+    line='PasswordAuthentication no'
+    state=present
+  tags: users_ssh
+  notify:
+    - restart ssh
+  when: ansible_role_users.disallow_password_ssh
+
+- name: Allow only users in our groups to access server using SSH
+  lineinfile:
+    dest=/etc/ssh/sshd_config
+    regexp='^AllowGroups'
+    line='AllowGroups {{ ansible_role_users.allow_groups }}'
+    state=present
+  tags: users_ssh
+  notify:
+    - restart ssh

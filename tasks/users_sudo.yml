@@ -1,0 +1,26 @@
+---
+# ===============================================================
+# sudo: ensure our users have appropriate sudo permissions
+# ===============================================================
+
+- name: write the custom sudoers file
+  template: >
+    src=../templates/custom_sudoers.j2
+    dest=/etc/sudoers.d/custom_sudoers
+    owner=root group=root mode=0440
+  tags: users_sudo
+
+- name: Check that our custom sudoers file is valid
+  command: visudo -c -f /etc/sudoers.d/custom_sudoers
+  register: result
+  tags: users_sudo
+
+- name: Rolling back - Removing our custom sudoers file
+  command: rm -rf /etc/sudoers.d/custom_sudoers
+  when: result|failed
+  tags: users_sudo
+
+- name: Rolling back - Ending playbook
+  action: fail msg="Sudoers file is not valid. Please check that before re-running the playbook."
+  when: result|failed
+  tags: users_sudo
