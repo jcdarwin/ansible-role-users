@@ -17,6 +17,20 @@ You'll probably want to amend / override:
 
         - hosts: whatever
 
+Installation
+------------
+
+Preusming a `requirements.yml` as follows:
+
+    # Install a role from GitHub
+    - name: ansible-role-users
+    src: https://github.com/jcdarwin/ansible-role-users
+
+we can install the role locally:
+
+    ansible-galaxy install -r requirements.yml -p ./roles
+
+
 Requirements
 ------------
 
@@ -81,7 +95,7 @@ Running the playbook:
 License
 -------
 
-BSD
+MIT
 
 Author Information
 ------------------
