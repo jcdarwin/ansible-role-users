@@ -38,7 +38,7 @@ galaxy_info:
 
   galaxy_tags:
     - meBooks
-	- users
+    - users
 
 dependencies: []
   # List your role dependencies here, one per line.
