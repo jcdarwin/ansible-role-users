@@ -88,6 +88,10 @@ Running the playbook:
     ssh deploy@127.0.0.1 -p 2222
     sudo -s
 
+Note that after running this playbook you'll have improved security by updating the public key for the user `vagrant`, but this means you'll no longer be able to `vagrant ssh`. Instead you'll have to use the following (presuming you've kept the same key in the `defaults/main.yml`):
+
+    ssh vagrant@127.0.0.1 -p 2222 -i ~/.ssh/id_rsa
+
 License
 -------
 

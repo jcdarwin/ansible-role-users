@@ -6,6 +6,7 @@ ansible_role_users:
   users:
   - deploy
   - git
+  - vagrant
 
   # the main group to use when creating the user
   user_group: wheel
