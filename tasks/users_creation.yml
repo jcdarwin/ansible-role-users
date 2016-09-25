@@ -32,3 +32,11 @@
     key="{{ lookup('file', '{{ ansible_role_users.public_key }}') }}"
   with_items: "{{ ansible_role_users.users }}"
   tags: users_creation
+
+- name: Ensure the user group has access to /var/www
+  file:
+    path=/var/www
+    state=directory
+    owner=www-data
+    group={{ ansible_role_users.user_group }}
+    mode=0775
