@@ -3,7 +3,6 @@
 # users: Access, security and permissions
 # ===============================================================
 
-- include_vars: "defaults/main.yml"
 
 - name: Adding the primary group
   group:

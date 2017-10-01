@@ -3,7 +3,6 @@
 # ssh: lock down ssh
 # ===============================================================
 
-- include_vars: "defaults/main.yml"
 
 - name: Disallow root SSH access
   lineinfile:
@@ -35,4 +34,30 @@
     state=present
   notify:
     - restart ssh
+  tags: users_ssh
+- name: configure git email
+  command: git config --global user.email "{{ ansible_role_users.git.user_email }}"
+  tags: users_ssh
+
+- name: configure git user
+  command: git config --global user.name "{{ ansible_role_users.git.user_name }}"
+  tags: users_ssh
+
+- name: Create our keypair
+  command: ssh-keygen -t rsa -f /root/.ssh/id_rsa -N ''
+  args:
+    creates: /root/.ssh/id_rsa
+  tags: users_ssh
+
+- name: Show message
+  debug: msg="Register the following public key with your git remotes so we can clone and push"
+  tags: users_ssh
+
+- name: Retrieve our public key
+  command: cat /root/.ssh/id_rsa.pub
+  register: public_key
+  tags: users_ssh
+
+- name: Show our public key
+  debug: var=public_key.stdout
   tags: users_ssh

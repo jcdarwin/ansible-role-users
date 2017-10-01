@@ -6,7 +6,8 @@ ansible_role_users:
   users:
   - deploy
   - git
-  - vagrant
+  - docker
+#  - vagrant
 
   # the main group to use when creating the user
   user_group: wheel
@@ -26,3 +27,7 @@ ansible_role_users:
 
   # do we want to disallow password ssh access?
   disallow_password_ssh: true
+
+  git:
+    user_email: whoever@example.com
+    user_name: Whomever
