@@ -6,7 +6,6 @@
   remote_user: root
   become: true
   become_user: root
-  become_method: sudo
   tags: users
   vars_files:
   - vars/main.yml

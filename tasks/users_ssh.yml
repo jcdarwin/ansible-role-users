@@ -3,6 +3,7 @@
 # ssh: lock down ssh
 # ===============================================================
 
+- include_vars: "defaults/main.yml"
 
 - name: Disallow root SSH access
   lineinfile:
@@ -35,6 +36,7 @@
   notify:
     - restart ssh
   tags: users_ssh
+
 - name: configure git email
   command: git config --global user.email "{{ ansible_role_users.git.user_email }}"
   tags: users_ssh
