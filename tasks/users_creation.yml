@@ -5,10 +5,11 @@
 
 - include_vars: "defaults/main.yml"
 
-- name: Adding the primary group
+- name: Adding the groups
   group:
-    name={{ ansible_role_users.user_group }}
+    name={{ item }}
     state=present
+  with_items: "{{ ansible_role_users.groups }}"
   tags: users_creation
 
 - name: Adding root into our groups
@@ -32,3 +33,11 @@
     key="{{ lookup('file', '{{ ansible_role_users.public_key }}') }}"
   with_items: "{{ ansible_role_users.users }}"
   tags: users_creation
+
+- name: Ensure the user group has access to /var/www
+  file:
+    path=/var/www
+    state=directory
+    owner=www-data
+    group={{ ansible_role_users.user_group }}
+    mode=0775

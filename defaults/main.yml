@@ -7,7 +7,13 @@ ansible_role_users:
   - deploy
   - git
   - docker
-#  - vagrant
+
+  # the groups we need
+  groups:
+  - ssh
+  - wheel
+  - www-data
+  - sudo
 
   # the main group to use when creating the user
   user_group: wheel
@@ -17,7 +23,7 @@ ansible_role_users:
 
   # users in the following groups get SSH access to the machine
   # note that the value is space-separated
-  allow_groups: ssh vagrant
+  allow_groups: ssh
 
   # the public key value to use to allow the user ssh access
   public_key: '~/.ssh/id_rsa.pub'
